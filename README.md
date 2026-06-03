@@ -1,11 +1,11 @@
-# ALAB / MRVL Fact-Check Dashboard
+# ALAB / MRVL Investment Research Dashboard
 
-Static research dashboard for fact-checking Korean blog investment theses on:
+Static research dashboard for comparing two U.S.-listed semiconductor companies:
 
 - Astera Labs, Inc. (`ALAB`)
 - Marvell Technology, Inc. (`MRVL`)
 
-The dashboard uses primary sources first: company IR releases, SEC filings, and official NVIDIA / standards-body announcements. Analyst targets, price moves, and long-term multi-bagger narratives are treated as secondary or unsupported where appropriate.
+The dashboard focuses on business model, AI infrastructure exposure, financial momentum, valuation, risk profile, and investor-fit framing. It uses primary sources first: company IR releases, SEC filings, and official NVIDIA / standards-body announcements. Market-price-derived valuation metrics should be refreshed before use.
 
 ## Open Locally
 
@@ -23,10 +23,10 @@ http://127.0.0.1:8765/
 
 ## Contents
 
-- `ALAB` tab: Astera Labs KPI, claim checks, product map, timeline, risk radar, scenarios.
-- `MRVL` tab: Marvell KPI, claim checks, custom silicon / optics / networking map, timeline, risk radar, scenarios.
-- `Compare` tab: ALAB vs MRVL business model and risk comparison.
+- `ALAB` tab: investment snapshot, business map, AI relevance, financial momentum, valuation lens, growth drivers, risks, investment-read framework.
+- `MRVL` tab: custom silicon / optics / networking investment lens, financial momentum, valuation, growth drivers, risks, investment-read framework.
+- `Compare` tab: ALAB vs MRVL investment character, investor fit, decision matrix, final research view.
 
 ## Important Note
 
-This is a research and fact-checking dashboard, not investment advice. All data should be re-verified before making financial decisions.
+This is a research dashboard, not investment advice. All data should be re-verified before making financial decisions.

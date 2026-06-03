@@ -1,39 +1,58 @@
-function createDashboardCharts(data) {
-	if (!window.Chart) {
-		return;
-	}
-
-	const Chart = window.Chart;
-	const grid = "rgba(102, 112, 133, 0.2)";
+function destroyCharts() {
 	for (const chart of Object.values(window.dashboardCharts ?? {})) {
 		chart.destroy();
 	}
 	window.dashboardCharts = {};
+}
+
+function baseChartOptions(title) {
+	return {
+		responsive: true,
+		maintainAspectRatio: false,
+		plugins: {
+			legend: {
+				labels: {
+					boxWidth: 10,
+					boxHeight: 10,
+				},
+			},
+			title: {
+				display: true,
+				text: title,
+			},
+		},
+	};
+}
+
+function createCompanyCharts(company) {
+	if (!window.Chart) return;
+
+	const Chart = window.Chart;
 	Chart.defaults.font.family = "'IBM Plex Sans KR', system-ui, sans-serif";
 	Chart.defaults.color = "#172033";
+	const grid = "rgba(101, 116, 139, 0.22)";
+	const rows = company.financialMomentum.rows;
+	const annual = company.financialMomentum.annual;
+
+	destroyCharts();
 
 	window.dashboardCharts.revenue = new Chart(
 		document.getElementById("revenueChart"),
 		{
 			type: "bar",
 			data: {
-				labels: data.financials.map((item) => item.period),
+				labels: rows.map((row) => row.period),
 				datasets: [
 					{
 						label: "Revenue ($M)",
-						data: data.financials.map((item) => item.revenue),
-						backgroundColor: ["#0f766e", "#2563eb", "#b45309"],
-						borderRadius: 6,
+						data: rows.map((row) => row.revenue),
+						backgroundColor: "#0f766e",
+						borderRadius: 5,
 					},
 				],
 			},
 			options: {
-				responsive: true,
-				maintainAspectRatio: false,
-				plugins: {
-					legend: { display: false },
-					title: { display: true, text: "Quarterly Revenue" },
-				},
+				...baseChartOptions("Quarterly Revenue"),
 				scales: {
 					y: {
 						grid: { color: grid },
@@ -50,30 +69,28 @@ function createDashboardCharts(data) {
 		{
 			type: "line",
 			data: {
-				labels: data.financials.map((item) => item.period),
+				labels: rows.map((row) => row.period),
 				datasets: [
 					{
 						label: "GAAP GM %",
-						data: data.financials.map((item) => item.gaapMargin),
-						borderColor: "#047857",
-						backgroundColor: "rgba(4, 120, 87, 0.12)",
-						tension: 0.28,
+						data: rows.map((row) => row.gaapMargin),
+						borderColor: "#2563eb",
+						backgroundColor: "rgba(37, 99, 235, 0.12)",
+						tension: 0.25,
 						yAxisID: "y",
 					},
 					{
 						label: "GAAP Net Income ($M)",
-						data: data.financials.map((item) => item.netIncome),
+						data: rows.map((row) => row.netIncome),
 						borderColor: "#b45309",
 						backgroundColor: "rgba(180, 83, 9, 0.12)",
-						tension: 0.28,
+						tension: 0.25,
 						yAxisID: "y1",
 					},
 				],
 			},
 			options: {
-				responsive: true,
-				maintainAspectRatio: false,
-				plugins: { title: { display: true, text: "Margin and Profitability" } },
+				...baseChartOptions("Margin and Profitability"),
 				scales: {
 					y: {
 						position: "left",
@@ -91,50 +108,43 @@ function createDashboardCharts(data) {
 		},
 	);
 
-	const hasDataCenterShare = data.financials.some(
-		(item) => item.dataCenterShare,
-	);
+	const hasMix = rows.some((row) => row.dataCenterShare);
 	window.dashboardCharts.mix = new Chart(document.getElementById("mixChart"), {
-		type: hasDataCenterShare ? "line" : "bar",
+		type: hasMix ? "line" : "bar",
 		data: {
-			labels: hasDataCenterShare
-				? data.financials.map((item) => item.period)
-				: data.annualRevenue.map((item) => item.period),
+			labels: hasMix
+				? rows.map((row) => row.period)
+				: annual.map((row) => row.period),
 			datasets: [
 				{
-					label: hasDataCenterShare
-						? "Data Center Share %"
-						: "Annual Revenue ($M)",
-					data: hasDataCenterShare
-						? data.financials.map((item) => item.dataCenterShare)
-						: data.annualRevenue.map((item) => item.revenue),
-					borderColor: "#2563eb",
-					backgroundColor: "rgba(37, 99, 235, 0.14)",
-					borderRadius: 6,
-					tension: 0.28,
-					fill: hasDataCenterShare,
+					label: hasMix ? "Data Center Share %" : "Annual Revenue ($M)",
+					data: hasMix
+						? rows.map((row) => row.dataCenterShare)
+						: annual.map((row) => row.revenue),
+					borderColor: "#047857",
+					backgroundColor: hasMix ? "rgba(4, 120, 87, 0.13)" : "#94a3b8",
+					borderRadius: 5,
+					fill: hasMix,
+					tension: 0.25,
 				},
 			],
 		},
 		options: {
-			responsive: true,
-			maintainAspectRatio: false,
+			...baseChartOptions(
+				hasMix ? "Data Center Revenue Mix" : "Annual Revenue",
+			),
 			plugins: {
+				...baseChartOptions("").plugins,
 				legend: { display: false },
 				title: {
 					display: true,
-					text: hasDataCenterShare
-						? "Data Center Revenue Mix"
-						: "Annual Revenue",
+					text: hasMix ? "Data Center Revenue Mix" : "Annual Revenue",
 				},
 			},
 			scales: {
 				y: {
 					grid: { color: grid },
-					ticks: {
-						callback: (value) =>
-							hasDataCenterShare ? `${value}%` : `$${value}M`,
-					},
+					ticks: { callback: (value) => (hasMix ? `${value}%` : `$${value}M`) },
 				},
 				x: { grid: { display: false } },
 			},
@@ -146,13 +156,13 @@ function createDashboardCharts(data) {
 		{
 			type: "radar",
 			data: {
-				labels: data.risks.map((risk) => risk.name),
+				labels: company.risks.map((risk) => risk.name),
 				datasets: [
 					{
 						label: "Risk Score",
-						data: data.risks.map((risk) => risk.score),
+						data: company.risks.map((risk) => risk.score),
 						borderColor: "#b91c1c",
-						backgroundColor: "rgba(185, 28, 28, 0.13)",
+						backgroundColor: "rgba(185, 28, 28, 0.12)",
 						pointBackgroundColor: "#b91c1c",
 					},
 				],
@@ -175,4 +185,53 @@ function createDashboardCharts(data) {
 	);
 }
 
-window.createDashboardCharts = createDashboardCharts;
+function createCompareChart(compare) {
+	if (!window.Chart) return;
+
+	const Chart = window.Chart;
+	Chart.defaults.font.family = "'IBM Plex Sans KR', system-ui, sans-serif";
+	Chart.defaults.color = "#172033";
+	destroyCharts();
+
+	window.dashboardCharts.compare = new Chart(
+		document.getElementById("compareScoreChart"),
+		{
+			type: "radar",
+			data: {
+				labels: compare.decisionScores.map((score) => score.axis),
+				datasets: [
+					{
+						label: "ALAB",
+						data: compare.decisionScores.map((score) => score.alab),
+						borderColor: "#0f766e",
+						backgroundColor: "rgba(15, 118, 110, 0.14)",
+						pointBackgroundColor: "#0f766e",
+					},
+					{
+						label: "MRVL",
+						data: compare.decisionScores.map((score) => score.mrvl),
+						borderColor: "#2563eb",
+						backgroundColor: "rgba(37, 99, 235, 0.12)",
+						pointBackgroundColor: "#2563eb",
+					},
+				],
+			},
+			options: {
+				responsive: true,
+				maintainAspectRatio: false,
+				scales: {
+					r: {
+						beginAtZero: true,
+						max: 5,
+						ticks: { stepSize: 1, backdropColor: "transparent" },
+						grid: { color: "rgba(101, 116, 139, 0.22)" },
+						angleLines: { color: "rgba(101, 116, 139, 0.22)" },
+					},
+				},
+			},
+		},
+	);
+}
+
+window.createCompanyCharts = createCompanyCharts;
+window.createCompareChart = createCompareChart;

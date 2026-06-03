@@ -1,113 +1,274 @@
 function makeDashboardRenderers($, dashboard) {
-	function renderCards(containerId, items, itemRenderer) {
-		$(containerId).innerHTML = items
-			.map((item, index) => itemRenderer(item, index))
+	const formatMoney = (value) => {
+		if (Math.abs(value) >= 1000) return `$${(value / 1000).toFixed(2)}B`;
+		return `$${value.toFixed(1)}M`;
+	};
+
+	const list = (items) => items.map((item) => `<li>${item}</li>`).join("");
+
+	function renderTabs(activeTab, onSelect) {
+		$("tabNav").innerHTML = dashboard.tabs
+			.map(
+				(tab) => `
+					<button class="tab-button ${activeTab === tab.id ? "active" : ""}" data-tab="${tab.id}">
+						<strong>${tab.label}</strong>
+						<span>${tab.description}</span>
+					</button>
+				`,
+			)
+			.join("");
+
+		for (const button of $("tabNav").querySelectorAll("button")) {
+			button.addEventListener("click", () => onSelect(button.dataset.tab));
+		}
+	}
+
+	function renderHeader(company) {
+		$("headerEyebrow").textContent =
+			`NASDAQ: ${company.company.ticker} · 기준일 ${company.company.asOfDate}`;
+		$("pageTitle").textContent = `${company.company.name} Investment Research`;
+		document.title = `${company.company.ticker} Investment Research Dashboard`;
+	}
+
+	function renderSnapshot(company) {
+		$("companyTicker").textContent = company.company.ticker;
+		$("companyType").textContent = company.company.type;
+		$("snapshotSummary").textContent = company.snapshot.summary;
+		$("snapshotProfile").textContent = company.snapshot.profile;
+		$("snapshotCharacter").textContent = company.snapshot.character;
+		$("snapshotQuestion").textContent = company.snapshot.keyQuestion;
+		$("snapshotRead").textContent = company.snapshot.researchRead;
+		$("priceDiscipline").textContent = company.snapshot.priceDiscipline;
+		$("valuationWarning").textContent = company.snapshot.valuationWarning;
+		$("heroTags").innerHTML = company.snapshot.tags
+			.map((tag) => `<span>${tag}</span>`)
 			.join("");
 	}
 
-	function renderCompanyLists(company) {
-		renderCards(
-			"productGrid",
-			company.products,
-			(product) => `
-				<article class="product-card">
-					<h3>${product.name}</h3>
-					<span class="protocol">${product.protocol}</span>
-					<p>${product.role}</p>
-				</article>
-			`,
-		);
-		renderCards(
-			"valueChain",
-			company.valueChain,
-			(step, index) => `
-				<article class="value-step ${step.active ? "active" : ""}">
-					<span class="index">${String(index + 1).padStart(2, "0")}</span>
-					<h3>${step.title}</h3>
-					<p>${step.body}</p>
-				</article>
-			`,
-		);
-		renderCards(
-			"timeline",
-			company.timeline,
-			(item) => `
-				<article class="timeline-item">
-					<div class="timeline-date">${item.date}</div>
-					<div><h3>${item.title}</h3><p>${item.body}</p></div>
-				</article>
-			`,
-		);
+	function renderKpis(company) {
+		$("kpiGrid").innerHTML = company.kpis
+			.map(
+				(kpi) => `
+					<article class="kpi-card ${kpi.risk ? "risk" : ""}">
+						<span>${kpi.label}</span>
+						<strong>${kpi.value}</strong>
+						<em>${kpi.meta}</em>
+					</article>
+				`,
+			)
+			.join("");
 	}
 
-	function renderSidePanels(company) {
+	function renderBusiness(company) {
+		$("businessModel").textContent = company.business.model;
+		$("businessBody").innerHTML = `<p>${company.business.body}</p>`;
+		$("productGrid").innerHTML = company.business.products
+			.map(
+				(product) => `
+					<article class="product-card">
+						<div>
+							<h3>${product.name}</h3>
+							<span>${product.label}</span>
+						</div>
+						<p>${product.body}</p>
+					</article>
+				`,
+			)
+			.join("");
+	}
+
+	function renderWhyNow(company) {
+		$("whyNowGrid").innerHTML = company.whyNow
+			.map(
+				(item) => `
+					<article class="insight-item">
+						<h3>${item.title}</h3>
+						<p>${item.body}</p>
+					</article>
+				`,
+			)
+			.join("");
+	}
+
+	function renderFinancials(company) {
+		$("financialRows").innerHTML = company.financialMomentum.rows
+			.map(
+				(row) => `
+					<tr>
+						<td>${row.period}</td>
+						<td>${formatMoney(row.revenue)}</td>
+						<td>${row.gaapMargin.toFixed(1)}%</td>
+						<td>${row.nonGaapMargin ? `${row.nonGaapMargin.toFixed(1)}%` : "-"}</td>
+						<td>${formatMoney(row.netIncome)}</td>
+						<td>${row.dataCenterShare ? `DC ${row.dataCenterShare}% · ${row.note}` : row.note}</td>
+					</tr>
+				`,
+			)
+			.join("");
+
+		$("financialNotes").innerHTML = company.financialMomentum.notes
+			.map((note) => `<p>${note}</p>`)
+			.join("");
+	}
+
+	function renderValuation(company) {
+		$("marketDataAsOf").textContent = company.valuation.marketDataAsOf;
+		$("valuationStats").innerHTML = company.valuation.stats
+			.map(
+				(stat) => `
+					<article>
+						<span>${stat.label}</span>
+						<strong>${stat.value}</strong>
+						<em>${stat.detail}</em>
+					</article>
+				`,
+			)
+			.join("");
+		$("valuationLens").innerHTML = company.valuation.lenses
+			.map(
+				(item) => `
+					<article>
+						<h3>${item.title}</h3>
+						<p>${item.body}</p>
+					</article>
+				`,
+			)
+			.join("");
+	}
+
+	function renderDrivers(company) {
+		$("driverList").innerHTML = company.growthDrivers
+			.map(
+				(driver) => `
+					<article>
+						<h3>${driver.title}</h3>
+						<p>${driver.body}</p>
+					</article>
+				`,
+			)
+			.join("");
+	}
+
+	function renderRisks(company) {
 		$("riskList").innerHTML = company.risks
 			.map(
-				(risk) =>
-					`<div class="risk-item"><strong><span>${risk.name}</span><span>${risk.score}/5</span></strong><p>${risk.evidence}</p></div>`,
-			)
-			.join("");
-		$("scenarioStack").innerHTML = company.scenarios
-			.map(
-				(scenario) =>
-					`<article class="scenario ${scenario.className}"><h3>${scenario.name}</h3><p>${scenario.headline}</p><ul>${scenario.points.map((point) => `<li>${point}</li>`).join("")}</ul></article>`,
-			)
-			.join("");
-		$("truthGrid").innerHTML = company.truth
-			.map(
-				(item) =>
-					`<article class="truth-card"><strong>${item.title}</strong><p>${item.body}</p></article>`,
+				(risk) => `
+					<div class="risk-item">
+						<strong><span>${risk.name}</span><span>${risk.score}/5</span></strong>
+						<p>${risk.evidence}</p>
+					</div>
+				`,
 			)
 			.join("");
 	}
 
-	function renderCompetitors(company) {
-		$("competitorRows").innerHTML = company.competitors
+	function renderInvestmentRead(company) {
+		const read = company.investmentRead;
+		$("investmentRead").innerHTML = `
+			<article class="read-card bull"><h3>Bull Case</h3><ul>${list(read.bull)}</ul></article>
+			<article class="read-card base"><h3>Base Case</h3><ul>${list(read.base)}</ul></article>
+			<article class="read-card bear"><h3>Bear Case</h3><ul>${list(read.bear)}</ul></article>
+			<article class="read-card"><h3>확인해야 할 지표</h3><ul>${list(read.monitor)}</ul></article>
+			<article class="read-card"><h3>좋은 진입 조건</h3><ul>${list(read.goodEntry)}</ul></article>
+			<article class="read-card"><h3>피해야 할 조건</h3><ul>${list(read.avoidWhen)}</ul></article>
+		`;
+	}
+
+	function renderSources(company) {
+		$("primarySources").innerHTML = company.sources
 			.map(
-				(item) =>
-					`<tr><td>${item.name}</td><td>${item.axis}</td><td>${item.point}</td></tr>`,
+				(source) => `
+					<li>
+						<strong><a href="${source.url}" target="_blank" rel="noopener">${source.title}</a></strong>
+						<span>${source.type} · ${source.detail}</span>
+					</li>
+				`,
 			)
 			.join("");
 	}
 
-	function renderSectionLabels(company) {
-		$("financials-title").textContent = company.sectionLabels.financials;
-		$("portfolio-title").textContent = company.sectionLabels.portfolio;
-		$("value-title").textContent = company.sectionLabels.valueChain;
-		$("timeline-title").textContent = company.sectionLabels.timeline;
-		$("truth-title").textContent = company.sectionLabels.truth;
+	function renderCompany(company) {
+		renderHeader(company);
+		renderSnapshot(company);
+		renderKpis(company);
+		renderBusiness(company);
+		renderWhyNow(company);
+		renderFinancials(company);
+		renderValuation(company);
+		renderDrivers(company);
+		renderRisks(company);
+		renderInvestmentRead(company);
+		renderSources(company);
 	}
 
 	function renderCompare() {
+		const compare = dashboard.compare;
 		$("headerEyebrow").textContent = "NASDAQ: ALAB · MRVL · 기준일 2026-06-03";
-		$("pageTitle").textContent = "ALAB vs MRVL 비교 대시보드";
-		document.title = "ALAB vs MRVL Compare Dashboard";
-		$("compareSummary").innerHTML = dashboard.compare.summary
+		$("pageTitle").textContent = "ALAB vs MRVL Investment Research";
+		document.title = "ALAB vs MRVL Investment Research Dashboard";
+		$("compareHeadline").textContent = compare.headline.title;
+		$("compareBody").textContent = compare.headline.body;
+		$("compareResearchView").textContent = compare.headline.researchView;
+		$("compareResearchNote").textContent = compare.headline.note;
+		$("compareHeadlineGrid").innerHTML = compare.headline.cards
 			.map(
-				(item) =>
-					`<div><strong>${item.title}</strong><span>${item.body}</span></div>`,
+				(card) => `
+					<article>
+						<span>${card.title}</span>
+						<strong>${card.body}</strong>
+					</article>
+				`,
 			)
 			.join("");
-		$("compareSources").innerHTML = dashboard.compare.sources
+		$("compareRows").innerHTML = compare.rows
 			.map(
-				(item) =>
-					`<li><strong>${item.title}</strong><span>${item.detail}</span></li>`,
+				(row) => `
+					<tr>
+						<td>${row.axis}</td>
+						<td>${row.alab}</td>
+						<td>${row.mrvl}</td>
+					</tr>
+				`,
 			)
 			.join("");
-		$("compareRows").innerHTML = dashboard.compare.rows
+		$("investorFit").innerHTML = compare.investorFit
 			.map(
-				(row) =>
-					`<tr><td>${row.axis}</td><td>${row.alab}</td><td>${row.mrvl}</td></tr>`,
+				(fit) => `
+					<article>
+						<h3>${fit.title}</h3>
+						<p>${fit.body}</p>
+						<ul>${list(fit.points)}</ul>
+					</article>
+				`,
+			)
+			.join("");
+		$("decisionScores").innerHTML = compare.decisionScores
+			.map(
+				(score) => `
+					<div class="score-row">
+						<span>${score.axis}</span>
+						<strong>ALAB ${score.alab}</strong>
+						<strong>MRVL ${score.mrvl}</strong>
+					</div>
+				`,
+			)
+			.join("");
+		$("finalView").innerHTML = compare.finalView
+			.map(
+				(item) => `
+					<article>
+						<h3>${item.title}</h3>
+						<p>${item.body}</p>
+					</article>
+				`,
 			)
 			.join("");
 	}
 
 	return {
-		renderCompanyLists,
-		renderCompetitors,
+		renderTabs,
+		renderCompany,
 		renderCompare,
-		renderSectionLabels,
-		renderSidePanels,
 	};
 }
 
