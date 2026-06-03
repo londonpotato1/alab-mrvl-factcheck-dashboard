@@ -52,7 +52,7 @@ function createCompanyCharts(company) {
 				],
 			},
 			options: {
-				...baseChartOptions("Quarterly Revenue"),
+				...baseChartOptions("매출이 커지는 속도"),
 				scales: {
 					y: {
 						grid: { color: grid },
@@ -72,7 +72,7 @@ function createCompanyCharts(company) {
 				labels: rows.map((row) => row.period),
 				datasets: [
 					{
-						label: "GAAP GM %",
+						label: "이익률 %",
 						data: rows.map((row) => row.gaapMargin),
 						borderColor: "#2563eb",
 						backgroundColor: "rgba(37, 99, 235, 0.12)",
@@ -80,7 +80,7 @@ function createCompanyCharts(company) {
 						yAxisID: "y",
 					},
 					{
-						label: "GAAP Net Income ($M)",
+						label: "순이익 ($M)",
 						data: rows.map((row) => row.netIncome),
 						borderColor: "#b45309",
 						backgroundColor: "rgba(180, 83, 9, 0.12)",
@@ -90,7 +90,7 @@ function createCompanyCharts(company) {
 				],
 			},
 			options: {
-				...baseChartOptions("Margin and Profitability"),
+				...baseChartOptions("이익률과 순이익"),
 				scales: {
 					y: {
 						position: "left",
@@ -130,15 +130,13 @@ function createCompanyCharts(company) {
 			],
 		},
 		options: {
-			...baseChartOptions(
-				hasMix ? "Data Center Revenue Mix" : "Annual Revenue",
-			),
+			...baseChartOptions(hasMix ? "데이터센터 매출 비중" : "연간 매출 성장"),
 			plugins: {
 				...baseChartOptions("").plugins,
 				legend: { display: false },
 				title: {
 					display: true,
-					text: hasMix ? "Data Center Revenue Mix" : "Annual Revenue",
+					text: hasMix ? "데이터센터 매출 비중" : "연간 매출 성장",
 				},
 			},
 			scales: {

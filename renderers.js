@@ -26,8 +26,8 @@ function makeDashboardRenderers($, dashboard) {
 	function renderHeader(company) {
 		$("headerEyebrow").textContent =
 			`NASDAQ: ${company.company.ticker} · 기준일 ${company.company.asOfDate}`;
-		$("pageTitle").textContent = `${company.company.name} Investment Research`;
-		document.title = `${company.company.ticker} Investment Research Dashboard`;
+		$("pageTitle").textContent = `${company.company.name} 쉬운 분석`;
+		document.title = `${company.company.ticker} AI 반도체 쉬운 대시보드`;
 	}
 
 	function renderSnapshot(company) {
@@ -97,10 +97,9 @@ function makeDashboardRenderers($, dashboard) {
 					<tr>
 						<td>${row.period}</td>
 						<td>${formatMoney(row.revenue)}</td>
-						<td>${row.gaapMargin.toFixed(1)}%</td>
-						<td>${row.nonGaapMargin ? `${row.nonGaapMargin.toFixed(1)}%` : "-"}</td>
-						<td>${formatMoney(row.netIncome)}</td>
-						<td>${row.dataCenterShare ? `DC ${row.dataCenterShare}% · ${row.note}` : row.note}</td>
+						<td>${row.growthLabel ?? row.note}</td>
+						<td>${row.profitLabel ?? `${row.gaapMargin.toFixed(1)}% GM`}</td>
+						<td>${row.takeaway ?? (row.dataCenterShare ? `데이터센터 비중 ${row.dataCenterShare}%` : row.note)}</td>
 					</tr>
 				`,
 			)
@@ -165,12 +164,12 @@ function makeDashboardRenderers($, dashboard) {
 	function renderInvestmentRead(company) {
 		const read = company.investmentRead;
 		$("investmentRead").innerHTML = `
-			<article class="read-card bull"><h3>Bull Case</h3><ul>${list(read.bull)}</ul></article>
-			<article class="read-card base"><h3>Base Case</h3><ul>${list(read.base)}</ul></article>
-			<article class="read-card bear"><h3>Bear Case</h3><ul>${list(read.bear)}</ul></article>
-			<article class="read-card"><h3>확인해야 할 지표</h3><ul>${list(read.monitor)}</ul></article>
-			<article class="read-card"><h3>좋은 진입 조건</h3><ul>${list(read.goodEntry)}</ul></article>
-			<article class="read-card"><h3>피해야 할 조건</h3><ul>${list(read.avoidWhen)}</ul></article>
+			<article class="read-card bull"><h3>좋게 풀리면</h3><ul>${list(read.bull)}</ul></article>
+			<article class="read-card base"><h3>보통이면</h3><ul>${list(read.base)}</ul></article>
+			<article class="read-card bear"><h3>나쁘게 풀리면</h3><ul>${list(read.bear)}</ul></article>
+			<article class="read-card"><h3>꼭 확인할 숫자</h3><ul>${list(read.monitor)}</ul></article>
+			<article class="read-card"><h3>관심 가질 상황</h3><ul>${list(read.goodEntry)}</ul></article>
+			<article class="read-card"><h3>조심할 상황</h3><ul>${list(read.avoidWhen)}</ul></article>
 		`;
 	}
 
@@ -204,8 +203,8 @@ function makeDashboardRenderers($, dashboard) {
 	function renderCompare() {
 		const compare = dashboard.compare;
 		$("headerEyebrow").textContent = "NASDAQ: ALAB · MRVL · 기준일 2026-06-03";
-		$("pageTitle").textContent = "ALAB vs MRVL Investment Research";
-		document.title = "ALAB vs MRVL Investment Research Dashboard";
+		$("pageTitle").textContent = "ALAB vs MRVL 쉬운 비교";
+		document.title = "ALAB vs MRVL AI 반도체 쉬운 비교";
 		$("compareHeadline").textContent = compare.headline.title;
 		$("compareBody").textContent = compare.headline.body;
 		$("compareResearchView").textContent = compare.headline.researchView;

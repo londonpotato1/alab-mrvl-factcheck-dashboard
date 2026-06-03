@@ -332,7 +332,7 @@ button {
 
 .kpi-grid {
 	display: grid;
-	grid-template-columns: repeat(8, minmax(0, 1fr));
+	grid-template-columns: repeat(6, minmax(0, 1fr));
 	gap: 10px;
 	margin-bottom: 16px;
 }
@@ -486,7 +486,7 @@ button {
 .mini-table,
 .compare-table {
 	width: 100%;
-	min-width: 760px;
+	min-width: 660px;
 	border-collapse: collapse;
 }
 
@@ -676,7 +676,7 @@ tr:last-child td {
 
 @media (max-width: 1180px) {
 	.kpi-grid {
-		grid-template-columns: repeat(4, minmax(0, 1fr));
+		grid-template-columns: repeat(3, minmax(0, 1fr));
 	}
 
 	.product-grid,

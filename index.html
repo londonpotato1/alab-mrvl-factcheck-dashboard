@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ALAB / MRVL Investment Research Dashboard</title>
-  <meta name="description" content="ALAB와 MRVL의 사업, AI 인프라 노출, 실적 모멘텀, 밸류에이션, 리스크를 비교하는 투자 리서치 대시보드" />
+  <title>ALAB / MRVL AI 반도체 쉬운 대시보드</title>
+  <meta name="description" content="ALAB와 MRVL이 AI 발전에 어떻게 쓰이는지, 매출 성장과 가격 부담은 어떤지 초보자도 이해하기 쉽게 보여주는 대시보드" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -22,13 +22,13 @@
       <span class="signal-mark" aria-hidden="true"></span>
       <div>
         <p id="headerEyebrow" class="eyebrow">NASDAQ: ALAB · MRVL · 기준일 2026-06-03</p>
-        <h1 id="pageTitle">AI Infrastructure Equity Research</h1>
+        <h1 id="pageTitle">AI 반도체 쉬운 대시보드</h1>
       </div>
     </div>
     <div class="topbar-meta">
-      <span class="notice">리서치용 · 투자 조언 아님</span>
-      <span>공식 자료 우선</span>
-      <span>수치 출처 표시</span>
+      <span class="notice">투자 조언 아님</span>
+      <span>초보자용 설명</span>
+      <span>공식 수치 기반</span>
     </div>
   </header>
 
@@ -60,7 +60,7 @@
           </div>
         </div>
         <aside class="hero-side" aria-label="진입 판단 기준">
-          <p class="section-kicker">Valuation Discipline</p>
+          <p class="section-kicker">가격을 볼 때</p>
           <h3 id="priceDiscipline"></h3>
           <p id="valuationWarning"></p>
           <div id="heroTags" class="hero-tags"></div>
@@ -74,8 +74,8 @@
           <section class="panel" aria-labelledby="business-title">
             <div class="panel-head">
               <div>
-                <p class="section-kicker">Question 1 · Business</p>
-                <h2 id="business-title">What They Do</h2>
+                <p class="section-kicker">Step 1 · 회사 이해</p>
+                <h2 id="business-title">이 회사는 뭘 파나요?</h2>
               </div>
               <span id="businessModel" class="data-label"></span>
             </div>
@@ -86,10 +86,10 @@
           <section class="panel" aria-labelledby="why-title">
             <div class="panel-head">
               <div>
-                <p class="section-kicker">Question 2 · Timing</p>
-                <h2 id="why-title">Why It Matters Now</h2>
+                <p class="section-kicker">Step 2 · AI 속 역할</p>
+                <h2 id="why-title">AI 발전에 어떻게 쓰이나요?</h2>
               </div>
-              <span class="data-label">AI 데이터센터 병목 관점</span>
+              <span class="data-label">쉬운 말로 보는 핵심 역할</span>
             </div>
             <div id="whyNowGrid" class="insight-grid"></div>
           </section>
@@ -97,10 +97,10 @@
           <section class="panel" aria-labelledby="financials-title">
             <div class="panel-head">
               <div>
-                <p class="section-kicker">Question 3 · Momentum</p>
-                <h2 id="financials-title">Financial Momentum</h2>
+                <p class="section-kicker">Step 3 · 매출 성장</p>
+                <h2 id="financials-title">매출은 얼마나 빨리 커지나요?</h2>
               </div>
-              <span class="data-label">GAAP 기준 · Non-GAAP 별도 표기</span>
+              <span class="data-label">핵심 숫자만 요약</span>
             </div>
             <div class="chart-grid">
               <div class="chart-box">
@@ -119,10 +119,9 @@
                   <tr>
                     <th>기간</th>
                     <th>매출</th>
-                    <th>GAAP GM</th>
-                    <th>Non-GAAP GM</th>
-                    <th>GAAP 순이익</th>
-                    <th>비고</th>
+                    <th>성장 신호</th>
+                    <th>이익 신호</th>
+                    <th>쉬운 해석</th>
                   </tr>
                 </thead>
                 <tbody id="financialRows"></tbody>
@@ -134,8 +133,8 @@
           <section class="panel" aria-labelledby="valuation-title">
             <div class="panel-head">
               <div>
-                <p class="section-kicker">Question 4 · Price</p>
-                <h2 id="valuation-title">Valuation Lens</h2>
+                <p class="section-kicker">Step 4 · 가격</p>
+                <h2 id="valuation-title">지금 가격은 부담인가요?</h2>
               </div>
               <span id="marketDataAsOf" class="data-label"></span>
             </div>
@@ -148,8 +147,8 @@
           <section class="panel" aria-labelledby="drivers-title">
             <div class="panel-head tight">
               <div>
-                <p class="section-kicker">Question 5 · Upside</p>
-                <h2 id="drivers-title">Growth Drivers</h2>
+                <p class="section-kicker">Step 5 · 성장성</p>
+                <h2 id="drivers-title">앞으로 커질 이유</h2>
               </div>
             </div>
             <div id="driverList" class="stack-list"></div>
@@ -158,8 +157,8 @@
           <section class="panel" aria-labelledby="risk-title">
             <div class="panel-head tight">
               <div>
-                <p class="section-kicker">Question 6 · Downside</p>
-                <h2 id="risk-title">Risk Profile</h2>
+                <p class="section-kicker">Step 6 · 조심할 점</p>
+                <h2 id="risk-title">무엇을 조심해야 하나요?</h2>
               </div>
               <span class="data-label">1 낮음 · 5 높음</span>
             </div>
@@ -172,8 +171,8 @@
           <section class="panel" aria-labelledby="read-title">
             <div class="panel-head tight">
               <div>
-                <p class="section-kicker">Question 7 · Decision Frame</p>
-                <h2 id="read-title">Investment Read</h2>
+                <p class="section-kicker">Step 7 · 판단 프레임</p>
+                <h2 id="read-title">초보자용 투자 판단 질문</h2>
               </div>
             </div>
             <div id="investmentRead" class="read-stack"></div>
@@ -182,8 +181,8 @@
           <section class="panel source-panel" aria-labelledby="sources-title">
             <div class="panel-head tight">
               <div>
-                <p class="section-kicker">Data Trail</p>
-                <h2 id="sources-title">Sources</h2>
+                <p class="section-kicker">근거</p>
+                <h2 id="sources-title">어디서 확인했나요?</h2>
               </div>
             </div>
             <ul id="primarySources" class="source-list"></ul>
@@ -197,14 +196,14 @@
         <div class="hero-main">
           <div class="hero-topline">
             <span class="ticker-pill">Compare</span>
-            <span class="company-type">AI infrastructure exposure map</span>
+            <span class="company-type">초보자용 비교 지도</span>
           </div>
           <h2 id="compareHeadline"></h2>
           <p id="compareBody"></p>
           <div id="compareHeadlineGrid" class="thesis-grid"></div>
         </div>
         <aside class="hero-side" aria-label="비교 결론">
-          <p class="section-kicker">Research View</p>
+          <p class="section-kicker">한 줄 결론</p>
           <h3 id="compareResearchView"></h3>
           <p id="compareResearchNote"></p>
         </aside>
@@ -215,10 +214,10 @@
           <section class="panel" aria-labelledby="compare-title">
             <div class="panel-head">
               <div>
-                <p class="section-kicker">Question 8 · Fit</p>
-                <h2 id="compare-title">투자 성격 비교표</h2>
+                <p class="section-kicker">비교 1 · 성격</p>
+                <h2 id="compare-title">둘은 무엇이 다른가요?</h2>
               </div>
-              <span class="data-label">추천이 아니라 성격 분류</span>
+              <span class="data-label">추천이 아니라 이해를 돕는 분류</span>
             </div>
             <div class="table-wrap">
               <table class="compare-table">
@@ -233,8 +232,8 @@
           <section class="panel" aria-labelledby="fit-title">
             <div class="panel-head">
               <div>
-                <p class="section-kicker">Investor Fit</p>
-                <h2 id="fit-title">어떤 성격의 투자에 가까운가</h2>
+                <p class="section-kicker">비교 2 · 투자 성격</p>
+                <h2 id="fit-title">어떤 생각으로 볼 수 있나요?</h2>
               </div>
             </div>
             <div id="investorFit" class="fit-grid"></div>
@@ -245,8 +244,8 @@
           <section class="panel" aria-labelledby="score-title">
             <div class="panel-head tight">
               <div>
-                <p class="section-kicker">Decision Matrix</p>
-                <h2 id="score-title">분석 보조 점수</h2>
+                <p class="section-kicker">비교 3 · 점수표</p>
+                <h2 id="score-title">한눈에 보는 성격 점수</h2>
               </div>
               <span class="data-label">1 낮음 · 5 높음</span>
             </div>
@@ -259,8 +258,8 @@
           <section class="panel" aria-labelledby="final-title">
             <div class="panel-head tight">
               <div>
-                <p class="section-kicker">Final Research View</p>
-                <h2 id="final-title">요약 관점</h2>
+                <p class="section-kicker">마지막 정리</p>
+                <h2 id="final-title">초보자용 요약</h2>
               </div>
             </div>
             <div id="finalView" class="stack-list"></div>
