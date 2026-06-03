@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Semiconductor Fact-Check Dashboard</title>
+  <meta name="description" content="미국 상장 반도체 기업 ALAB·MRVL 기업분석, 블로그 주장 팩트체크, 리스크 분석 대시보드" />
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+	<link rel="icon" href="data:," />
+	<link rel="stylesheet" href="./styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
+  <script src="./data.js" defer></script>
+  <script src="./charts.js" defer></script>
+  <script src="./renderers.js" defer></script>
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand-lockup">
+      <span class="signal-mark" aria-hidden="true"></span>
+      <div>
+        <p id="headerEyebrow" class="eyebrow">NASDAQ: ALAB · MRVL · 기준일 2026-06-03</p>
+        <h1 id="pageTitle">Semiconductor 팩트체크 대시보드</h1>
+      </div>
+    </div>
+    <div class="topbar-meta">
+      <span class="notice">리서치용 · 투자 조언 아님</span>
+      <span>1차 자료 우선</span>
+    </div>
+  </header>
+
+  <main class="page-shell">
+    <nav id="tabNav" class="tab-nav" aria-label="회사 탭"></nav>
+
+    <section id="companyPanel">
+    <section class="hero-grid" aria-label="대시보드 요약">
+      <div class="thesis-panel">
+        <div id="heroKicker" class="section-kicker">Blog Thesis Review</div>
+        <h2 id="heroTitle"></h2>
+        <p id="heroBody"></p>
+        <div id="heroSplit" class="thesis-split"></div>
+      </div>
+
+      <aside class="source-panel" aria-label="핵심 출처">
+        <div class="section-kicker">Evidence Stack</div>
+        <ul id="primarySources" class="source-list"></ul>
+      </aside>
+    </section>
+
+    <section id="kpiGrid" class="kpi-grid" aria-label="핵심 지표"></section>
+
+    <section class="dashboard-grid">
+      <div class="main-column">
+        <section class="panel" aria-labelledby="claims-title">
+          <div class="panel-head">
+            <div>
+              <p class="section-kicker">Section 1</p>
+              <h2 id="claims-title">블로그 주장 팩트체크 매트릭스</h2>
+            </div>
+            <div id="verdictFilters" class="filter-bar" aria-label="판정 필터"></div>
+          </div>
+          <div class="table-wrap">
+            <table class="fact-table">
+              <thead>
+                <tr>
+                  <th>주장</th>
+                  <th>판정</th>
+                  <th>최신 사실</th>
+                  <th>대시보드 반영</th>
+                </tr>
+              </thead>
+              <tbody id="claimRows"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="panel" aria-labelledby="financials-title">
+          <div class="panel-head">
+            <div>
+              <p class="section-kicker">Section 2</p>
+              <h2 id="financials-title">실적 추이</h2>
+            </div>
+            <span class="data-label">GAAP 기준, 별도 표기 시 Non-GAAP</span>
+          </div>
+          <div class="chart-grid">
+            <div class="chart-box">
+              <canvas id="revenueChart" aria-label="분기별 매출 차트"></canvas>
+            </div>
+            <div class="chart-box">
+              <canvas id="marginChart" aria-label="매출총이익률과 순이익 차트"></canvas>
+            </div>
+            <div class="chart-box">
+              <canvas id="mixChart" aria-label="데이터센터 비중 또는 연간 매출 차트"></canvas>
+            </div>
+          </div>
+          <div class="mini-table-wrap">
+            <table class="mini-table">
+              <thead>
+                <tr><th>기간</th><th>매출</th><th>GAAP GM</th><th>GAAP 순이익</th></tr>
+              </thead>
+              <tbody id="financialRows"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="panel" aria-labelledby="portfolio-title">
+          <div class="panel-head">
+            <div>
+              <p class="section-kicker">Section 3</p>
+              <h2 id="portfolio-title">제품 포트폴리오 맵</h2>
+            </div>
+          </div>
+          <div id="productGrid" class="product-grid"></div>
+        </section>
+
+        <section class="panel" aria-labelledby="value-title">
+          <div class="panel-head">
+            <div>
+              <p class="section-kicker">Section 4</p>
+              <h2 id="value-title">AI 인프라 밸류체인 내 위치</h2>
+            </div>
+          </div>
+          <div id="valueChain" class="value-chain"></div>
+        </section>
+
+        <section class="panel" aria-labelledby="timeline-title">
+          <div class="panel-head">
+            <div>
+              <p class="section-kicker">Section 5</p>
+              <h2 id="timeline-title">핵심 이벤트 타임라인</h2>
+            </div>
+          </div>
+          <div id="timeline" class="timeline"></div>
+        </section>
+
+        <section class="panel" aria-labelledby="competitors-title">
+          <div class="panel-head">
+            <div>
+              <p class="section-kicker">Section 7</p>
+              <h2 id="competitors-title">경쟁사 비교</h2>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table class="fact-table compact">
+              <thead>
+                <tr><th>기업</th><th>비교축</th><th>핵심 포인트</th></tr>
+              </thead>
+              <tbody id="competitorRows"></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <aside class="side-column">
+        <section class="panel sticky-panel" aria-labelledby="evidence-title">
+          <p class="section-kicker">Evidence Drawer</p>
+          <h2 id="evidence-title">선택 주장 근거</h2>
+          <div id="evidenceDrawer" class="evidence-drawer"></div>
+        </section>
+
+        <section class="panel" aria-labelledby="risk-title">
+          <div class="panel-head tight">
+            <div>
+              <p class="section-kicker">Section 6</p>
+              <h2 id="risk-title">리스크 레이더</h2>
+            </div>
+          </div>
+          <div class="radar-box">
+            <canvas id="riskChart" aria-label="리스크 레이더 차트"></canvas>
+          </div>
+          <div id="riskList" class="risk-list"></div>
+        </section>
+
+        <section class="panel" aria-labelledby="scenario-title">
+          <div class="panel-head tight">
+            <div>
+              <p class="section-kicker">Section 8</p>
+              <h2 id="scenario-title">Bull · Base · Bear</h2>
+            </div>
+          </div>
+          <div id="scenarioStack" class="scenario-stack"></div>
+        </section>
+
+        <section class="panel" aria-labelledby="truth-title">
+          <div class="panel-head tight">
+            <div>
+              <p class="section-kicker">Section 9</p>
+              <h2 id="truth-title">검증된 사실 vs 투자 서사</h2>
+            </div>
+          </div>
+          <div id="truthGrid" class="truth-grid"></div>
+        </section>
+      </aside>
+    </section>
+
+    <section class="panel data-section" aria-labelledby="schema-title">
+      <div class="panel-head">
+        <div>
+          <p class="section-kicker">Implementation Spec</p>
+          <h2 id="schema-title">데이터 업데이트 구조</h2>
+        </div>
+      </div>
+      <pre><code>{
+  "companies": ["ALAB", "MRVL"],
+  "activeTab": "ALAB | MRVL | Compare",
+  "asOfDate": "2026-06-03",
+  "financials": "company-specific quarterly GAAP/Non-GAAP data",
+  "claimChecks": "blog claim verdict matrix",
+  "risks": "radar score + source",
+  "compare": "ALAB vs MRVL research framework"
+}</code></pre>
+    </section>
+    </section>
+
+    <section id="comparePanel" class="compare-panel" hidden>
+      <section class="hero-grid" aria-label="비교 요약">
+        <div class="thesis-panel">
+          <div class="section-kicker">ALAB vs MRVL</div>
+          <h2>둘 다 AI 인프라 수혜주지만, 노출 방식은 완전히 다릅니다.</h2>
+          <p>
+            ALAB는 AI connectivity 순수 성장 노출이 강하고, MRVL은 더 큰 규모의 custom silicon, optics, networking 복합 노출이 강합니다.
+            Compare 탭은 추천이 아니라 포트폴리오 성격과 리스크 차이를 분해하기 위한 화면입니다.
+          </p>
+          <div id="compareSummary" class="thesis-split"></div>
+        </div>
+        <aside class="source-panel" aria-label="비교 출처">
+          <div class="section-kicker">Compare Frame</div>
+          <ul id="compareSources" class="source-list"></ul>
+        </aside>
+      </section>
+
+      <section class="panel" aria-labelledby="compare-title">
+        <div class="panel-head">
+          <div>
+            <p class="section-kicker">Compare</p>
+            <h2 id="compare-title">ALAB vs MRVL 한눈에 비교</h2>
+          </div>
+          <span class="data-label">리서치 관점 · 투자 추천 아님</span>
+        </div>
+        <div class="table-wrap">
+          <table class="fact-table compact">
+            <thead>
+              <tr><th>비교축</th><th>ALAB</th><th>MRVL</th></tr>
+            </thead>
+            <tbody id="compareRows"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="kpi-grid compare-kpis" aria-label="비교 KPI">
+        <article class="kpi-card">
+          <span>ALAB 성격</span>
+          <strong>Pure</strong>
+          <em>AI connectivity growth exposure</em>
+        </article>
+        <article class="kpi-card">
+          <span>MRVL 성격</span>
+          <strong>Platform</strong>
+          <em>custom silicon + optics + networking</em>
+        </article>
+        <article class="kpi-card risk">
+          <span>ALAB 핵심 리스크</span>
+          <strong>70%+</strong>
+          <em>최대 고객 집중도</em>
+        </article>
+        <article class="kpi-card risk">
+          <span>MRVL 핵심 리스크</span>
+          <strong>82%</strong>
+          <em>상위 10개 고객</em>
+        </article>
+      </section>
+    </section>
+  </main>
+</body>
+</html>
