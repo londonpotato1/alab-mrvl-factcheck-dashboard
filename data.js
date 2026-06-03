@@ -95,6 +95,38 @@ const alabResearch = {
 			body: "Blackwell, MGX, NVLink Fusion 같은 차세대 AI 인프라 발표에서 ALAB의 연결 기술이 언급된다.",
 		},
 	],
+	competitiveEdge: {
+		kicker: "좁지만 깊은 연결 전문성",
+		summary:
+			"ALAB의 무기는 AI 서버 안의 데이터 길만 집요하게 파는 집중력이다. GPU를 직접 만들지는 않지만, GPU가 놀지 않게 데이터 길을 열어주는 부품과 관리 소프트웨어를 같이 판다.",
+		cards: [
+			{
+				label: "무기 1",
+				title: "연결 병목만 파는 순수 노출",
+				body: "PCIe, CXL, Ethernet, UALink, NVLink Fusion 접점에 집중한다. AI 서버가 복잡해질수록 연결 문제를 해결하는 회사의 가치가 커질 수 있다.",
+				emphasis: true,
+			},
+			{
+				label: "무기 2",
+				title: "Scorpio가 단순 부품을 넘어 교차로가 됨",
+				body: "Scorpio X-Series는 AI 칩들이 서로 말하는 fabric switch다. 회사는 320-lane 제품을 출하 중이며 H2 2026 ramp를 기대한다.",
+			},
+			{
+				label: "무기 3",
+				title: "COSMOS 소프트웨어",
+				body: "칩만 파는 게 아니라 연결 상태를 설정, 관측, 진단하는 소프트웨어도 제공한다. 고객 시스템 안에 더 깊게 들어갈 수 있는 이유다.",
+			},
+			{
+				label: "한계",
+				title: "큰 고객 의존도는 아직 부담",
+				body: "무기가 강해도 매출이 몇몇 고객에 몰려 있다. 그래서 성장성과 고객 다변화를 함께 봐야 한다.",
+			},
+		],
+		verdict: {
+			title: "초보자용 결론",
+			body: "ALAB는 AI 공장 전체를 만들지는 않지만, 공장 안 고속도로와 교차로를 전문으로 까는 회사다. AI 서버 연결 문제가 커질수록 thesis가 강해진다.",
+		},
+	},
 	financialMomentum: {
 		rows: [
 			{
@@ -369,6 +401,49 @@ const mrvlResearch = {
 			body: "NVIDIA의 $2B 투자와 NVLink Fusion 협업은 MRVL의 custom silicon과 networking이 AI 생태계에서 중요해졌다는 신호다.",
 		},
 	],
+	competitiveEdge: {
+		kicker: "Broadcom을 전부 이기는 게 아니라, 다른 길을 뚫는 무기",
+		summary:
+			"MRVL의 핵심은 Broadcom보다 더 크다는 게 아니다. Broadcom은 이미 custom AI accelerator와 AI networking의 거인이다. MRVL의 무기는 custom AI 칩, 빛 통신, NVIDIA 생태계를 한 묶음으로 연결하는 능력이다.",
+		cards: [
+			{
+				label: "무기 1",
+				title: "NVIDIA가 $2B로 찍어준 생태계 연결",
+				body: "NVIDIA는 Marvell에 $2B를 투자하고 NVLink Fusion 파트너십을 발표했다. Marvell custom XPU가 NVIDIA AI factory 안으로 들어갈 수 있다는 강한 신호다.",
+				emphasis: true,
+			},
+			{
+				label: "무기 2",
+				title: "Custom XPU + optical을 같이 설계",
+				body: "MRVL은 맞춤형 AI 칩만 보는 게 아니라 그 칩끼리 빛으로 연결하는 optical DSP, silicon photonics, CPO까지 함께 본다.",
+				emphasis: true,
+			},
+			{
+				label: "무기 3",
+				title: "CPO와 silicon photonics 경험",
+				body: "Marvell은 silicon photonics가 8년 이상 양산됐고 100억 시간 이상 현장 운용됐다고 설명한다. AI 클러스터가 커질수록 빛 통신은 더 중요해진다.",
+			},
+			{
+				label: "무기 4",
+				title: "AI 전용 switch로 정면 승부",
+				body: "Teralynx T100 102.4Tbps switch는 AI 데이터센터의 전력과 지연시간을 줄이려는 제품이다. 다만 Broadcom Tomahawk 6와 정면 경쟁한다.",
+			},
+			{
+				label: "현실",
+				title: "Broadcom은 규모가 훨씬 크다",
+				body: "Broadcom은 Q1 FY2026 AI revenue가 $8.4B, YoY +106%라고 밝혔다. MRVL이 전면전에서 바로 이긴다고 보긴 어렵다.",
+			},
+			{
+				label: "승리 시나리오",
+				title: "AI 시장이 너무 커져서 여러 승자가 생기는 것",
+				body: "MRVL의 좋은 시나리오는 Broadcom을 대체하는 게 아니라, NVIDIA-compatible custom XPU와 optical interconnect 시장에서 큰 몫을 얻는 것이다.",
+			},
+		],
+		verdict: {
+			title: "초보자용 결론",
+			body: "Broadcom은 거대한 AI 공장 건설사다. MRVL은 그 공장 안에 맞춤형 엔진과 빛의 고속도로를 같이 까는 전문팀이 되려 한다.",
+		},
+	},
 	financialMomentum: {
 		rows: [
 			{
@@ -541,6 +616,24 @@ const mrvlResearch = {
 			url: "https://investor.marvell.com/sec-filings/all-sec-filings/content/0001193125-26-134462/d113606dex991.htm",
 		},
 		{
+			title: "Marvell CPO Architecture",
+			type: "공식 발표",
+			detail: "custom XPU, CPO, silicon photonics 차별점",
+			url: "https://www.marvell.com/company/newsroom/marvell-co-packaged-optics-architecture-custom-ai-accelerators.html",
+		},
+		{
+			title: "Marvell Teralynx T100",
+			type: "공식 발표",
+			detail: "102.4Tbps AI 데이터센터 switch",
+			url: "https://www.marvell.com/company/newsroom/marvell-announces-102-4-tbps-ai-cloud-data-center-switch.html",
+		},
+		{
+			title: "Broadcom Q1 FY2026",
+			type: "비교 기준",
+			detail: "AI revenue $8.4B, YoY +106%",
+			url: "https://investors.broadcom.com/node/63976/pdf",
+		},
+		{
 			title: "MRVL Market Data",
 			type: "시장 데이터",
 			detail: "주가와 시가총액 snapshot",
@@ -552,12 +645,16 @@ const mrvlResearch = {
 const compareResearch = {
 	headline: {
 		title: "ALAB는 좁고 빠른 길, MRVL은 큰 AI 인프라 백화점",
-		body: "두 회사 모두 AI 데이터센터가 커질수록 좋아질 수 있다. 차이는 성격이다. ALAB는 AI 서버 안의 데이터 길에 집중한 작은 고성장 회사이고, MRVL은 맞춤형 AI 칩과 광통신, 네트워크를 함께 가진 큰 회사다.",
+		body: "두 회사 모두 AI 데이터센터가 커질수록 좋아질 수 있다. 차이는 성격이다. ALAB는 AI 서버 안의 데이터 길에 집중한 작은 고성장 회사이고, MRVL은 맞춤형 AI 칩과 광통신, 네트워크를 함께 가진 큰 회사다. MRVL은 Broadcom과 정면승부도 하지만, 진짜 차별점은 NVIDIA 생태계와 빛 통신을 함께 묶는 데 있다.",
 		researchView: "초보자에게 핵심은 '무엇에 베팅하는가'를 구분하는 것이다.",
-		note: "ALAB는 연결 병목 해결, MRVL은 AI 데이터센터 전체 부품 묶음에 가깝다.",
+		note: "ALAB는 연결 병목 해결, MRVL은 AI 데이터센터 전체 부품 묶음과 Broadcom을 비껴가는 optical/NVIDIA 전장에 가깝다.",
 		cards: [
 			{ title: "ALAB", body: "AI 서버 안 데이터 길을 넓히는 집중형 성장주" },
 			{ title: "MRVL", body: "AI 칩, 광통신, 네트워크를 함께 가진 플랫폼" },
+			{
+				title: "MRVL vs AVGO",
+				body: "Broadcom은 규모의 강자, Marvell은 custom XPU + optical + NVIDIA 연결이 무기",
+			},
 			{
 				title: "공통점",
 				body: "AI 데이터센터 투자가 계속 커져야 숫자가 좋아진다",
@@ -592,6 +689,16 @@ const compareResearch = {
 			mrvl: "크고 제품이 많아 기회가 여러 개",
 		},
 		{
+			axis: "독보적 무기",
+			alab: "연결 병목을 깊게 파는 순수성",
+			mrvl: "custom XPU + optical + NVIDIA 생태계",
+		},
+		{
+			axis: "Broadcom과 비교",
+			alab: "직접 비교보다 AI 연결 전문 기업",
+			mrvl: "Broadcom은 규모 우위, MRVL은 빛 통신과 NVLink Fusion 차별화",
+		},
+		{
 			axis: "가장 큰 걱정",
 			alab: "고객 집중과 비싼 가격",
 			mrvl: "경쟁 심화와 비싼 가격",
@@ -614,10 +721,11 @@ const compareResearch = {
 		},
 		{
 			title: "MRVL이 더 쉬운 thesis",
-			body: "AI 데이터센터가 커질수록 맞춤형 칩, 광통신, 네트워크가 함께 필요해진다는 이야기다.",
+			body: "AI 데이터센터가 커질수록 맞춤형 칩, 광통신, 네트워크가 함께 필요해진다는 이야기다. Broadcom을 전부 이기는 thesis가 아니라, Broadcom이 다 먹지 못하는 optical/NVIDIA-compatible 전장을 가져가는 thesis다.",
 			points: [
 				"더 큰 회사와 넓은 제품군을 선호할 때",
 				"custom AI chip과 optical 성장에 관심 있을 때",
+				"NVIDIA NVLink Fusion과 $2B 투자를 중요한 신호로 볼 때",
 				"AI 인프라 전체 성장에 베팅하고 싶을 때",
 			],
 		},
@@ -637,7 +745,11 @@ const compareResearch = {
 		},
 		{
 			title: "MRVL",
-			body: "크고 넓다. AI 칩, 빛 통신, 네트워크가 함께 커진다는 데 베팅하는 회사다.",
+			body: "크고 넓다. AI 칩, 빛 통신, 네트워크가 함께 커진다는 데 베팅하는 회사다. Broadcom을 압도하기보다는 NVIDIA-compatible custom XPU와 optical interconnect에서 몫을 키우는지가 핵심이다.",
+		},
+		{
+			title: "Broadcom 비교",
+			body: "Broadcom은 이미 AI 매출 규모와 Ethernet/custom ASIC에서 매우 강하다. MRVL의 승리 조건은 시장이 커져서 여러 승자가 생기고, MRVL의 optical/CPO/NVLink Fusion 조합이 실제 매출로 이어지는 것이다.",
 		},
 		{
 			title: "공통 결론",

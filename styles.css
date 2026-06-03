@@ -407,6 +407,7 @@ button {
 
 .product-card,
 .insight-item,
+.moat-grid article,
 .valuation-grid article,
 .stack-list article,
 .fit-grid article,
@@ -420,6 +421,7 @@ button {
 
 .product-card h3,
 .insight-item h3,
+.moat-grid h3,
 .valuation-grid h3,
 .stack-list h3,
 .fit-grid h3,
@@ -440,10 +442,60 @@ button {
 
 .product-card p,
 .insight-item p,
+.moat-grid p,
 .valuation-grid p,
 .stack-list p,
 .fit-grid p {
 	margin: 8px 0 0;
+}
+
+.moat-summary {
+	margin: 0 0 12px;
+	color: #394150;
+	font-size: 14px;
+}
+
+.moat-grid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 10px;
+}
+
+.moat-grid article {
+	background: linear-gradient(180deg, #fff, #f8fafc);
+}
+
+.moat-grid article.emphasis {
+	border-color: rgba(4, 120, 87, 0.34);
+	background: #f0fdfa;
+}
+
+.moat-grid span {
+	display: inline-flex;
+	color: var(--green-2);
+	font-size: 12px;
+	font-weight: 800;
+}
+
+.moat-verdict {
+	margin-top: 10px;
+	padding: 12px 13px;
+	border: 1px solid rgba(37, 99, 235, 0.22);
+	border-left: 3px solid var(--blue);
+	border-radius: 8px;
+	background: #eff6ff;
+}
+
+.moat-verdict strong,
+.moat-verdict p {
+	display: block;
+	margin: 0;
+}
+
+.moat-verdict p {
+	margin-top: 5px;
+	color: #334155;
+	font-size: 13px;
 }
 
 .insight-grid,
@@ -681,6 +733,7 @@ tr:last-child td {
 
 	.product-grid,
 	.insight-grid,
+	.moat-grid,
 	.valuation-grid,
 	.chart-grid,
 	.valuation-stats {
@@ -710,6 +763,7 @@ tr:last-child td {
 	.thesis-grid,
 	.product-grid,
 	.insight-grid,
+	.moat-grid,
 	.valuation-grid,
 	.chart-grid,
 	.valuation-stats,

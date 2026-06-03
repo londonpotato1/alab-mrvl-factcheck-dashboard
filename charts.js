@@ -189,42 +189,48 @@ function createCompareChart(compare) {
 	const Chart = window.Chart;
 	Chart.defaults.font.family = "'IBM Plex Sans KR', system-ui, sans-serif";
 	Chart.defaults.color = "#172033";
+	const grid = "rgba(101, 116, 139, 0.22)";
 	destroyCharts();
 
 	window.dashboardCharts.compare = new Chart(
 		document.getElementById("compareScoreChart"),
 		{
-			type: "radar",
+			type: "bar",
 			data: {
 				labels: compare.decisionScores.map((score) => score.axis),
 				datasets: [
 					{
 						label: "ALAB",
 						data: compare.decisionScores.map((score) => score.alab),
-						borderColor: "#0f766e",
-						backgroundColor: "rgba(15, 118, 110, 0.14)",
-						pointBackgroundColor: "#0f766e",
+						backgroundColor: "#0f766e",
+						borderRadius: 5,
 					},
 					{
 						label: "MRVL",
 						data: compare.decisionScores.map((score) => score.mrvl),
-						borderColor: "#2563eb",
-						backgroundColor: "rgba(37, 99, 235, 0.12)",
-						pointBackgroundColor: "#2563eb",
+						backgroundColor: "#2563eb",
+						borderRadius: 5,
 					},
 				],
 			},
 			options: {
-				responsive: true,
-				maintainAspectRatio: false,
+				...baseChartOptions("투자 성격 점수 비교"),
+				plugins: {
+					...baseChartOptions("").plugins,
+					legend: { position: "bottom" },
+					title: {
+						display: true,
+						text: "투자 성격 점수 비교",
+					},
+				},
 				scales: {
-					r: {
+					y: {
 						beginAtZero: true,
 						max: 5,
-						ticks: { stepSize: 1, backdropColor: "transparent" },
-						grid: { color: "rgba(101, 116, 139, 0.22)" },
-						angleLines: { color: "rgba(101, 116, 139, 0.22)" },
+						ticks: { stepSize: 1 },
+						grid: { color: grid },
 					},
+					x: { grid: { display: false } },
 				},
 			},
 		},

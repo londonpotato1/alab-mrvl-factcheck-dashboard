@@ -90,6 +90,26 @@ function makeDashboardRenderers($, dashboard) {
 			.join("");
 	}
 
+	function renderMoat(company) {
+		$("moatKicker").textContent = company.competitiveEdge.kicker;
+		$("moatSummary").textContent = company.competitiveEdge.summary;
+		$("moatGrid").innerHTML = company.competitiveEdge.cards
+			.map(
+				(card) => `
+					<article class="${card.emphasis ? "emphasis" : ""}">
+						<span>${card.label}</span>
+						<h3>${card.title}</h3>
+						<p>${card.body}</p>
+					</article>
+				`,
+			)
+			.join("");
+		$("moatVerdict").innerHTML = `
+			<strong>${company.competitiveEdge.verdict.title}</strong>
+			<p>${company.competitiveEdge.verdict.body}</p>
+		`;
+	}
+
 	function renderFinancials(company) {
 		$("financialRows").innerHTML = company.financialMomentum.rows
 			.map(
@@ -192,6 +212,7 @@ function makeDashboardRenderers($, dashboard) {
 		renderKpis(company);
 		renderBusiness(company);
 		renderWhyNow(company);
+		renderMoat(company);
 		renderFinancials(company);
 		renderValuation(company);
 		renderDrivers(company);
